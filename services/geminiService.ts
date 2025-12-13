@@ -23,7 +23,7 @@ const roastSchema: Schema = {
     },
     image_prompt: {
       type: Type.STRING,
-      description: "A short, vivid visual description of the character for an AI image generator. Style: 'Funny 3D Pixar style character', 'Cyberpunk character portrait' or 'Flat cartoon vector'. Example: 'A zombie programmer eating a keyboard, green skin, cute style'.",
+      description: "A short, vivid visual description of the character for an AI image generator. MUST follow the defined Visual Archetypes.",
     },
     theme_color: {
       type: Type.STRING,
@@ -87,8 +87,19 @@ export const generateRoast = async (codeInput: string): Promise<RoastResponse> =
         Guidelines:
         1. Be savage but accurate.
         2. Point out specific logic errors and bad practices.
-        3. Generate a "image_prompt" for the card. This description will be used to generate an image via an external API. It should be funny, vivid, and match the archetype.
-        4. Pick a "theme_color" that matches the severity of the code quality.
+        3. Pick a "theme_color" that matches the severity of the code quality.
+
+        4. IMAGE PROMPT GENERATION RULES (STRICT):
+        You are currently generating too many "Zombie" style images. Update your logic for generating the image_prompt. 
+        Instead of defaulting to horror/zombies, you MUST map the specific code error to one of these distinct Visual Archetypes:
+
+        - The Spaghetti Chef: (For nested loops/messy logic) -> Visual: A chaotic Italian chef entangled in glowing neon pasta cables.
+        - The Arsonist: (For dangerous/insecure code) -> Visual: A maniacal raccoon standing in front of a burning server room.
+        - The Fossil: (For outdated syntax/old libraries) -> Visual: A dusty skeleton coding on a stone tablet in a museum.
+        - The Clown: (For silly logic errors) -> Visual: A sad cyber-clown trying to juggle too many error messages.
+        - The Snail: (For slow/inefficient code) -> Visual: A futuristic racing snail falling asleep at a keyboard.
+
+        Rule: Analyze the code first. Pick the Archetype that best matches the specific flaw. Never use the same archetype twice in a row.
       `;
       schema = roastSchema;
     }

@@ -23,6 +23,7 @@ export const RoastResult: React.FC<RoastResultProps> = ({ roast, code }) => {
     const seed = Math.floor(Math.random() * 1000000);
     
     // 2. URL Encoding Fix: Safely encode the prompt
+    // CRITICAL: We use ONLY the prompt provided by the LLM. No extra keywords.
     const safePrompt = encodeURIComponent(roast.image_prompt);
     
     // Construct Pollinations URL
@@ -30,7 +31,7 @@ export const RoastResult: React.FC<RoastResultProps> = ({ roast, code }) => {
 
     // 3. Console Logging
     console.log("Generated Image URL:", url);
-    console.log("Roast done, showing fix button now"); // Force visibility check log
+    console.log("Roast done, showing fix button now");
 
     setImgSrc(url);
   }, [roast]);
